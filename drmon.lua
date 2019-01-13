@@ -298,7 +298,7 @@ function update()
     end
 
     -- are we charged? lets activate
-    if ri.status == "charged" and activateOnCharged == 1 then
+    if ri.status == "charging" and ri.temperature >= 2000 and activateOnCharged == 1 then
       reactor.activateReactor()
     end
 
