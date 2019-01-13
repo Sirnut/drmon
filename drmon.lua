@@ -191,7 +191,7 @@ function update()
     end
     
     if ri.status == "running" then
-      ri.status == "online"
+      ri.status = "online"
     end
 
     for k, v in pairs (ri) do
