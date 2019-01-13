@@ -192,6 +192,10 @@ function update()
     
     if ri.status == "running" then
       ri.status = "online"
+    elseif ri.status == "warming_up" then
+      ri.status = "charging"
+    elseif ri.status == "cold" then
+      ri.status = "offline"
     end
 
     for k, v in pairs (ri) do
