@@ -287,7 +287,8 @@ function update()
         emergencyCharge = false
         reactor.activateReactor()
       else
-      reactor.chargeReactor()
+        reactor.chargeReactor()
+      end
     end
     
     -- are we charging? open the floodgates
