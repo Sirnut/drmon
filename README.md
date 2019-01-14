@@ -7,7 +7,7 @@
 monitor and failsafe automation for your draconic reactor
 
 ### what is this
-this is a computercraft LUA script that monitors everything about a draconic reactor, with a couple features to help keep it from exploding
+this is a computercraft LUA script that monitors everything about a draconic reactor, with a couple features to automate it
 NB: This is for Minecraft 1.12.2. You will need to edit references within the code for any version higher to reflect any changes made to Draconic Evolution past its 1.12.2 release.
 
 
@@ -16,15 +16,16 @@ you can find a very well made youtube tutorial on how to set this up [here](http
 
 ### features
 * uses a 3x3 advanced computer touchscreen monitor to interact with your reactor
-* automated regulation of the input gate for the targeted field strength of 50%
+* automated regulation of the input gate for the targeted field strength of 10%
   * adjustable
-* immediate shutdown and charge upon your field strength going below 20%
+* immediate shutdown and charge upon your field strength going below 5%
   * adjustable
   * reactor will activate upon a successful charge
 * immediate shutdown when your temperature goes above 8000C
   * adjustable
-  * reactor will activate upon temperature cooling down to 3000C
+  * reactor will activate upon temperature cooling down to 6000C
     * adjustable
+* automated output targeting a temperature of 7900C
 
 * easily tweak your output flux gate via touchscreen buttons
   * +/-100k, 10k, and 1k increments
@@ -42,7 +43,7 @@ you can find a very well made youtube tutorial on how to set this up [here](http
   * if you want to use different sides you need to modify `startup` after you have installed this and specify the sides
 * connect a modem to your input flux gate (the one connected to your reactor energy injector)
 * connect a modem to your advanced computer
-* setup yoru monitors to be a 3x3 and connect a modem to anywhere but the front
+* setup your monitors to be a 3x3 and connect a modem to anywhere but the front
 * run network cable to all 3 modems
 * install this code via running the install script using these commands :
 
