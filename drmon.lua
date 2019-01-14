@@ -6,6 +6,7 @@ local targetStrength = 10
 local targetTemperature = 7900
 local maxTemperature = 8000
 local safeTemperature = 6000
+local maxOutput = 5e6
 local lowestFieldPercent = 5
 
 local activateOnCharged = 1
@@ -114,6 +115,7 @@ function buttons()
       elseif xPos >= 25 and xPos <= 27 then
         curOutputGate = curOutputGate+1000
       end
+      curOutputGate =  math.min( maxOutput, curOutputGate ) 
       fluxgate.setSignalLowFlow(curOutputGate)
     end
     
@@ -282,7 +284,8 @@ function update()
     -- actual reactor interaction
     --
     if emergencyCharge == true then
-      inputfluxgate.setSignalLowFlow(900000)
+      fluxval = ri.fieldDrainRate / (1 - (targetStrength/100) )
+      inputfluxgate.setSignalLowFlow(math.max( 900000, fluxval ))
       if ri.temperature < 7000 and fieldPercent > 20 and activateOnCharged == 1 then
         emergencyCharge = false
         reactor.activateReactor()
@@ -298,9 +301,17 @@ function update()
     end
 
     -- are we stopping from a shutdown and our temp is better? activate
-    if emergencyTemp == true and ri.status == "stopping" and ri.temperature < safeTemperature then
-      reactor.activateReactor()
-      emergencyTemp = false
+    if emergencyTemp == true and ri.status == "stopping" then
+      if fieldPercent < 10 then
+        fluxval = ri.fieldDrainRate / (1 - (targetStrength/100) )
+        inputfluxgate.setSignalLowFlow(fluxval)
+      else
+        inputfluxgate.setSignalLowFlow(curInputGate)
+      end
+      if ri.temperature < safeTemperature then
+        reactor.activateReactor()
+        emergencyTemp = false
+      end
     end
 
     -- are we charged? lets activate
@@ -313,9 +324,9 @@ function update()
       if autoOutputGate == 1 then 
         fluxval = math.max( 0, math.min( (targetTemperature - ri.temperature) * 200, -( 8 - fieldPercent ) * 1e6 ) + ri.generationRate )
         print("Target Output: ".. fluxval)
-        fluxgate.setSignalLowFlow(fluxval)
+        fluxgate.setSignalLowFlow( math.min( maxOutput, fluxval ) )
       else
-        fluxgate.setSignalLowFlow(curOutputGate)
+        fluxgate.setSignalLowFlow( math.min( maxOutput, curOutputGate ) )
       end
     end
 
