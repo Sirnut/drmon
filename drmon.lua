@@ -282,6 +282,11 @@ function update()
     -- actual reactor interaction
     --
     if emergencyCharge == true then
+      inputfluxgate.setSignalLowFlow(900000)
+      if ri.temperature < 7000 and fieldPercent > 20 and activateOnCharged == 1 then
+        emergencyCharge = false
+        reactor.activateReactor()
+      else
       reactor.chargeReactor()
     end
     
@@ -305,7 +310,7 @@ function update()
     -- auto output flux gate
     if ri.status == "online" then
       if autoOutputGate == 1 then 
-        fluxval = (targetTemperature - ri.temperature) * 100 + ri.generationRate
+        fluxval = math.max( 0, math.min( (targetTemperature - ri.temperature) * 200, -( 8 - fieldPercent ) * 1e6 ) + ri.generationRate )
         print("Target Output: ".. fluxval)
         fluxgate.setSignalLowFlow(fluxval)
       else
@@ -334,7 +339,7 @@ function update()
       action = "Fuel below 10%, refuel"
     end
 
-    -- field strength is too dangerous, kill and it try and charge it before it blows
+    -- field strength is too dangerous, kill it and try charge it before it blows
     if fieldPercent <= lowestFieldPercent and ri.status == "online" then
       action = "Field Str < " ..lowestFieldPercent.."%"
       reactor.stopReactor()
@@ -342,7 +347,7 @@ function update()
       emergencyCharge = true
     end
 
-    -- temperature too high, kill it and activate it when its cool
+    -- temperature too high, kill it and activate it when it's cool
     if ri.temperature > maxTemperature then
       reactor.stopReactor()
       action = "Temp > " .. maxTemperature
