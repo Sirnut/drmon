@@ -45,6 +45,7 @@ you can find a very well made youtube tutorial on how to set this up [here](http
 * connect a modem to your advanced computer
 * setup your monitors to be a 3x3 and connect a modem to anywhere but the front
 * run network cable to all 3 modems
+* optional: connect a modem to an energy pylon (connected to the energy core [tier 2 or above recommended] used to inject energy into the reactor)
 * install this code via running the install script using these commands :
 
 ```

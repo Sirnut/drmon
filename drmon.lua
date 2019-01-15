@@ -41,6 +41,7 @@ monitor = f.periphSearch("monitor")
 inputfluxgate = f.periphSearch("flux_gate")
 fluxgate = peripheral.wrap(fluxgateSide)
 reactor = peripheral.wrap(reactorSide)
+energycore = f.periphSearch("draconic_rf_storage")
 
 if monitor == null then
 	error("No valid monitor was found")
@@ -364,6 +365,18 @@ function update()
       reactor.stopReactor()
       action = "Temp > " .. maxTemperature
       emergencyTemp = true
+    end
+    
+    -- check energy reserves
+    if energycore then
+      local energy = energycore.getEnergyStored()
+      if energy == 0 then
+        reactor.stopReactor()
+        action = "0 reserve energy"
+      elseif (energy/energycore.getMaxEnergyStored()) < 0.5 then
+        reactor.stopReactor()
+        action = "Reserve energy < 50%"
+      end
     end
 
     sleep(0.1)
