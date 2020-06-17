@@ -61,10 +61,23 @@ else
   load_config()
 end
 
-energy = energycore.getEnergyStored
-local energy = energycore.getEnergyStored
-if (energy/energycore.getMaxEnergyStored()) < 0.6 then
-  fluxgate.setSignalLowFlow(100000)
-else
-  fluxgate.setSignalLowFlow(500000)
+function update()
+  while true do 
+		
+    f.clear(mon)
+	--energy reserves
+		if energycore then
+			local energy = energycore.getEnergyStored()
+			if (energy/energycore.getMaxEnergyStored()) <= 0.7 then
+  			fluxgate.setSignalLowFlow(100000)
+			else
+  			fluxgate.setSignalLowFlow(1000000)
+			end
+			energyPercent = math.ceil(energy / energycore.getMaxEnergyStored() * 10000)*.01
+			f.draw_text_lr(mon, 2, 3, 1, "Core Storage", energyPercent .. "%", colors.white, colors.lime, colors.black)
+	  	f.progress_bar(mon, 2, 4, mon.X-2, energyPercent, 100, colors.cyan, colors.gray)
+		end
+		
+		sleep(0.1)
+	end
 end
