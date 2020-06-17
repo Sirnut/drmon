@@ -61,6 +61,7 @@ else
   load_config()
 end
 
+energy = energycore.getEnergyStored
 local energy = energycore.getEnergyStored
 if (energy/energycore.getMaxEnergyStored()) < 0.6 then
   fluxgate.setSignalLowFlow(100000)
