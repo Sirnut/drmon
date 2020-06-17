@@ -78,6 +78,7 @@ function update()
 			
 			f.draw_text_lr(mon, 2, 3, 1, "Core Storage", energyPercent .. "%", colors.white, colors.lime, colors.black)
 	  	f.progress_bar(mon, 2, 4, mon.X-2, energyPercent, 100, colors.cyan, colors.gray)
+			
 		end
 		
 		sleep(0.1)
