@@ -84,3 +84,6 @@ function update()
 		sleep(0.1)
 	end
 end
+
+parallel.waitForAny(buttons, update)
+
