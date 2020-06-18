@@ -68,7 +68,7 @@ you can find a very well made youtube tutorial on how to set this up [here](http
 > install
 > startup
 ```
-### Regulating Energy Core output
+### Regulating Energy Core output (WIP)
 ```
 > pastebin get YvQXdkTa install
 > install
