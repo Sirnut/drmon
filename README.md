@@ -70,7 +70,7 @@ you can find a very well made youtube tutorial on how to set this up [here](http
 ```
 ### Regulating Energy Core output
 ```
-> pastebin get q5Scm59e install
+> pastebin get YvQXdkTa install
 > install
 ```
 
