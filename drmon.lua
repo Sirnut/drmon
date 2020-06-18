@@ -280,7 +280,7 @@ function update()
     f.draw_text_lr(mon, 2, 17, 1, "Fuel ", fuelPercent .. "%", colors.white, fuelColor, colors.black)
     f.progress_bar(mon, 2, 18, mon.X-2, fuelPercent, 100, fuelColor, colors.gray)
 
-    f.draw_text_lr(mon, 2, 19, 1, "Action ", action, colors.gray, colors.gray, colors.black)
+    f.draw_text_lr(mon, 2, 20, 1, "Action ", action, colors.gray, colors.gray, colors.black)
 
     -- actual reactor interaction
     --
@@ -373,10 +373,15 @@ function update()
       if energy == 0 then
         reactor.stopReactor()
         action = "0 reserve energy"
-      elseif (energy/energycore.getMaxEnergyStored()) < 0.5 then
+      elseif (energy/energycore.getMaxEnergyStored()) < 0.25 then
         reactor.stopReactor()
-        action = "Reserve energy < 50%"
+        action = "Reserve energy < 25%"
       end
+			
+      energyPercent = math.ceil(energy / energycore.getMaxEnergyStored() * 10000)*.01
+	  
+      f.draw_text_lr(mon, 2, 22, 1, "Core Storage", energyPercent .. "%", colors.white, colors.lime, colors.black)
+      f.progress_bar(mon, 2, 23, mon.X-2, energyPercent, 100, colors.cyan, colors.gray)
     end
 
     sleep(0.1)
